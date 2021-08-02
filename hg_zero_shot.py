@@ -23,9 +23,14 @@ candidate_labels.sort()
 zs = classifier(sequences[0:3], candidate_labels, multi_label=True) # A list of dicts with "sequence", "labels" and "scores".
 
 scores = []
+class_pred = []
 for i in range(0, len(zs)):
     scores.append(pd.DataFrame([zs[i]['scores']], columns=zs[i]['labels']))
+    max_score = max(zs[i]['scores'])
+    max_index = zs[i]['scores'].index(max_score)
+    class_pred.append(zs[i]['labels'][max_index])
 scores = pd.concat(scores)
 scores = scores.reindex(sorted(scores.columns), axis=1)
+scores['class_pred'] = class_pred
 print(scores)
 scores.to_csv('zs_preds.csv')
