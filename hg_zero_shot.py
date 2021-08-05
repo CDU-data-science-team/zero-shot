@@ -34,5 +34,6 @@ for i in range(0, len(zs)):
 scores = pd.concat(scores)
 scores = scores.reindex(sorted(scores.columns), axis=1)
 scores['class_pred'] = class_pred
+scores['class'] = df['label'][0:n_sequences]
 print(scores)
 scores.to_csv('zs_preds.csv')
