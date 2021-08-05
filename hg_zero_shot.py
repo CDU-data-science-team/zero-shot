@@ -20,7 +20,9 @@ sequences = df.feedback.tolist()
 candidate_labels = df.label.unique()
 candidate_labels.sort()
 
-zs = classifier(sequences[0:3], candidate_labels, multi_label=True) # A list of dicts with "sequence", "labels" and "scores".
+n_sequences = 3
+
+zs = classifier(sequences[0:n_sequences], candidate_labels, multi_label=True) # A list of dicts with "sequence", "labels" and "scores".
 
 scores = []
 class_pred = []
