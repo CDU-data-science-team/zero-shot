@@ -1,0 +1,5 @@
+mydata=read.csv("data.csv",header=TRUE) 
+
+library("foreign")
+
+write.arff(x =mydata ,file= "train.arff") 
