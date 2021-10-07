@@ -7,10 +7,7 @@ Original file is located at
     https://colab.research.google.com/drive/1zBACeeSeWeK0HklAIQ4c371KVCvz2axJ
 """
 # Commented out IPython magic to ensure Python compatibility.
-!pip install transformers
-
-from google.colab import drive
-drive.mount('/content/drive')
+# pip install transformers
 
 # Import needed library
 import pandas as pd
@@ -60,6 +57,7 @@ def plot_conf_mat (y_true, y_pred, cmap="YlGnBu", ax=None, cm_perc=True):
 #                              "orientation": "horizontal"  # change the sidebar position
                   }, 
       )
+      plt.show()
 
 # Read data
 url = 'https://raw.githubusercontent.com/CDU-data-science-team/pxtextmining/main/datasets/text_data.csv'
@@ -68,12 +66,12 @@ data = pd.read_csv(url, usecols=['feedback', 'label'],  encoding='utf-8')#, nrow
 df = data.loc[8999:,:].reset_index(drop=True)   #***TESTING data (Not used in training the model)****
 
 # Fill missing values with 'Nothing'
-df.fillna('Nothing', inplace=True)
+df.dropna(inplace=True)
 print(df.shape)
 print(df.head())
 
 # Define the classifcation pipeline for prediction
-pretrained_model_name_or_path = '/content/drive/MyDrive/Colab Notebooks/best_model' # the folder directory the pretrained model is saved
+pretrained_model_name_or_path = 'model/' # the folder directory the pretrained model is saved
 classifier = pipeline("text-classification", model=pretrained_model_name_or_path)
 
 # Make prediction
@@ -88,3 +86,5 @@ print(df.head(10))
 print(f'Accuracy Score: {accuracy_score(df.label, df.new_label)}')
 print(f'balanced Accuracy Score: {balanced_accuracy_score(df.label, df.new_label)}')
 plot_conf_mat(df.label, df.new_label)
+
+plt.show()
