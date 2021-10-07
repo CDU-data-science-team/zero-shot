@@ -41,7 +41,7 @@ df = data.loc[:8999,:]         # the remaining data is USED FOR TESTING final pr
 
 #fill missing value has this causes runtime error while fiting the model 
 print(f'Missing values\n{df.isna().sum()}')
-df['feedback'].fillna('Nothing', inplace = True)
+df.dropna(inplace=True)
 print(df.isna().sum())
 print(f'{df.head()} \n\nno. of feedbacks: {len(df)} \n')
 
@@ -109,7 +109,8 @@ df['label'] = LabelEncoder().fit_transform(df.label)
 # Split the dataset
 seed = 0
 train_texts, train_labels = list(df.feedback), list(df.label)
-train_texts, val_texts, train_labels, val_labels = train_test_split(train_texts, train_labels, test_size=.2, random_state=seed) # create validation set
+train_texts, val_texts, train_labels, val_labels = train_test_split(train_texts, train_labels, test_size=.2, 
+                                                                    random_state=seed, stratify=df['label']) # create validation set
 # train_texts, test_texts, train_labels, test_labels = train_test_split(train_texts, train_labels, test_size=.2, random_state=seed)   # create validation set 
 
 print(f'No of feedbacks in\nTrain set: {len(train_texts)}\nValidation set: {len(val_texts)}') #\nTest set: {len(test_texts)} 
